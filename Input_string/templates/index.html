@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+		<link rel="shortcut icon" href="static/img/favicon1.png" type="image/x-icon"/>
+    <title>Tweetment</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="static/css/bootstrap.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="static/css/main.css" rel="stylesheet">
+
+    <!-- Fonts from Google Fonts -->
+	<link href='http://fonts.googleapis.com/css?family=Lato:300,400,900' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+	<link href='https://fonts.googleapis.com/css?family=Almendra' rel='stylesheet'>	
+<link href="https://fonts.googleapis.com/css?family=Rancho|Audiowide|Kaushan+Script|Libre+Barcode+128+Text|Righteous|Handlee" rel="stylesheet"> 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">	
+
+  </head>
+
+  <body>
+		
+	<div id="headerwrap">
+		<div class="container">
+			<div class="row">		
+				<div class="col-lg-6">
+					<h1>Input Strings Or Hashtag</h1>
+					<form class="form-inline" role="form" action="/result" method="post">
+					  <div class="form-group">
+							<input type="text" class="form-control" id="tweet_name" name="hashtag" placeholder="Enter String Or Hashtag">
+						  <button type="button" onclick="start_voice(this.id)" class="microphone" id="voice_btn1"><i class="fa fa-microphone"></i></button>
+						</div>
+						<br><span id="break"> &nbsp;</span> <br>
+						<div class="form-group">
+							<input type="text" class="form-control" id="tweet_no" name="tweet_count" placeholder="Enter no. tweets">
+							<button type="button" onclick="start_voice(this.id)" class="microphone" id="voice_btn2"><i class="fa fa-microphone"></i></button>
+							</div> 
+							<br>
+						<button type="submit" class="btn btn-warning btn-lg" id="analyise">Let's Analyise</button> 
+						
+					</form>					
+				</div><!-- /col-lg-6 -->
+
+				<div class="col-lg-6">
+					<img class="img-responsive" src=".../Twitter.png" alt="">
+				</div><!-- /col-lg-6 -->
+				
+			</div><!-- /row -->
+		</div><!-- /container -->
+	</div><!-- /headerwrap -->
+
+	
+	
+  </body>
+</html>

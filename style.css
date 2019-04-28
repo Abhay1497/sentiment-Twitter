@@ -1,0 +1,192 @@
+@import url('https://fonts.googleapis.com/css?family=Dosis:600,800');
+
+body{
+font-family: 'Dosis', sans-serif;
+font-size: 200%;
+color: #fff;
+text-shadow: 1px 1px 1px #666;
+}
+
+.navbar{
+	background-color: #297fb8;
+	border-bottom: 1px solid #5398c6;
+	padding: 1% 0;
+
+}
+
+
+.navbar-brand{
+	min-height: 55px;
+	padding: 0 15px 5px;
+
+}
+
+
+.navbar-nav li{
+	padding-right: 20px;
+
+}
+
+.navbar-inverse .navbar-nav li a{
+	color: #fff;
+}
+
+.navbar-inverse .navbar-nav li a:hover{
+	background-color: #5398c6;
+}
+
+.navbar-header{
+	padding-bottom: 5px;
+}
+
+.navbar-inverse .navbar-collapse , .navbar-inverse .navbar-form{
+	border-color:#5398c6;
+}
+
+.navbar-inverse .navbar-toggle{
+	border-color: #5398c6;
+}
+
+.navbar-inverse .navbar-toggle:hover , .navbar-inverse .navbar-toggle:focus{
+	background-color: #5398c6;
+}
+
+img.banner{
+width: 100%;
+}
+
+
+
+ .link{
+  display: inline-block; 
+  border: 3px solid lightblue;
+  padding: 18px;
+  border-radius: 12px;
+ 
+
+}
+
+.link: a{  
+	 color: white;
+}
+
+
+
+h1{
+font-size: 300%;
+font-weight: 800;
+text-shadow: 2px 2px 2px #666;
+}
+
+h2{
+font-size: 210%;
+
+}
+
+h3{
+	font-size: 150%;
+	max-width: 80%;
+	margin:0 auto;
+
+}
+ 
+
+ p{
+
+font-size: 120%;
+padding:6%;
+ }
+
+
+ img{
+ 	margin:0 auto;
+ }/*to center*/
+
+
+ #icon{
+max-width: 200px;
+margin: 1% auto;
+ }
+
+ .social{
+ 	font-size: 500%;
+
+ }
+
+.social a{
+ 	padding: 3%;
+ 	color: #fff;
+ }
+
+.social a:hover{
+	color: #d5d5d5;
+}
+
+
+
+#about{
+	padding: 70px 0;
+	background-color: #1fb8eb;
+}
+
+#feature{
+	padding: 70px 0 50px;
+	background-color: #ff9800;
+
+}
+
+
+#portfolio{
+	padding: 70px 0 50px;
+	background-color: #00b2ca;
+}
+
+
+#connect{
+	padding: 0 0 12%;
+	background-color: #673ab7;
+}
+
+.row{
+	margin:0;
+}
+
+@media(max-width: 768px){
+	h1{
+		font-size: 170px;
+	}
+	h2{
+		font-size: 160px;
+	}
+
+	p{
+		padding-top: 3%;
+		font-size: 100%
+	}
+
+	img#code{
+		max-width: 160px;
+	}
+
+	
+	.col-sm-3 #icon{
+		max-width: 110px;
+	}
+
+	.col-md-3 #icon{
+		max-width: 110px;
+		padding-bottom: 8%
+	}
+
+	.row{
+		margin: 0;
+	}
+
+	.social{
+		font-size: 200%;
+
+	}
+
+
+}
+

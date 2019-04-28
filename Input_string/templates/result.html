@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="static/img/favicon1.png" type="image/x-icon"/>
+    <meta http-equiv="cache-control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="-1" />
+  
+    <title>Tweetment</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="static/css/bootstrap.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="static/css/main.css" rel="stylesheet">
+
+    <!-- Fonts from Google Fonts -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+	 
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+		<![endif]-->
+  </head>
+
+  <body>		
+    <!-- Fixed navbar -->
+    <div class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="/"><b>TWEETMENT</b></a>
+        </div>
+      </div>
+    </div>
+
+    <div id="headerwrap">
+        <div class="container">
+          	
+            <div id="heading">
+              <h2 style="color:white;">Analysing <span style="color:black"> {{results[1]}} </span> tweets on <span style="color:black"> {{results[0]}}  </span> report is:<span style="color:black">{{results[2]}}</span></h2>
+             <!-- <a href="/"> <button class="btn btn-warning btn-lg">Analyse More</button> </a> -->
+             <div>
+              <h2>{%if hashtag %}Hastag: {{ hashtag }}{% else %}Empty Hashtag{% endif %} </h2>
+              <h2>{% if tweet_count %}Tweet Limit: {{ tweet_count }}{% else %}Empty/Zero No. of Tweets{% endif %} </h2>
+           </div>
+        
+            </div>
+            </div>
+            
+            <div class="row">		
+                
+                <div class="col-lg-6">
+              <div class="cont1">
+                <div id="result-image">
+              <img class="img-responsive"  src="static/img/result.png" alt="" witdh="600px">
+            </div>
+            </div>
+            </div>
+           
+            </div>
+            </div><!-- /container -->
+  </div><!-- /headerwrap -->
+  <div style="color:black">
+    {%if hashtag and tweet_count %} 
+    <hr>
+      {% for tweet in limits(hashtag, tweet_count) %} 
+        <h3>
+          {% for msg in analyse(tweet) %}
+            {{ msg }} <br/>
+          {% endfor %}
+        </h3> 
+      {% endfor %} 
+    {% else %}Empty Hashtag and zero limit
+    {% endif %} 
+    <hr>
+ <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="static/js/bootstrap.min.js"></script>
+  </body>
+</html>

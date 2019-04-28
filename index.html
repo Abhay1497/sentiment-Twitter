@@ -1,0 +1,144 @@
+ <!DOCTYPE html>
+<html>
+<head>
+  <title>Twitter Sentiment Analysis</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+  <script src="scrolling.js"></script>
+  <link rel="stylesheet" href="style.css">
+
+  <script type="text/javascript">
+     $(document).on('click','.navbar-collapse.in',function(e) {
+    if( $(e.target).is('a') && ( $(e.target).attr('class') != 'dropdown-toggle' ) ) {
+        $(this).collapse('hide');
+    }
+    });
+  </script>
+</head>
+<body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+
+      </button>
+
+      <a class="navbar-brand" href="#">
+      <h4>	Project Name</h4>
+      <!--<img src="#"><!--logo--></a>
+
+</div><!--end of navbar hear-->
+<div class="collapse navbar-collapse" id="myNavbar">
+  <ul class="nav navbar-nav navbar-right">
+<li><a href="#about">Home</a></li>
+<li><a href="#feature">About Project</a></li>
+<li><a href="#portfolio">Team Members</a></li>
+<li><a href="#about">Guide</a></li>
+
+
+  </ul>
+</div><!--end of navbar collapse-->
+
+  </div><!-- end of container-->
+
+</nav><!-- end of nav-->
+
+<div id="about" class="container-fluid text-center">
+	<br>
+
+  <h2>Twitter Sentiment Analysis</h2>
+<br>
+<br>
+<div class="row">
+  <div class="col-sm-6">
+    <div class="link">
+   <a href="Trend/WEB_OUTPUT.html"> <h3 style="color: white">Ongoing Trends Or Hashtags</h3></a>
+   </div>
+
+</div>
+ <div class="col-sm-6">
+        <div class="link">
+   <a href="http://127.0.0.1:5000"> <h3 style="color: white">Input String Or Hashtag</h3></a>
+   </div>
+
+</div>
+<!--end of row-->
+<br><br>
+
+
+</div>
+
+<br>
+<br>
+
+<img src="img/charts.png" class="banner">
+
+
+<div id="feature" class="container-fluid text-center">
+  <h1>About The Project</h1>
+  <h3> let me show you how to create a fantastic looking flat website using Bootstrap along with some HTML and CSS snippets.</h3>
+<br><br>
+<div class="row">
+  <div class="col-md-6">
+    <p>Creating a website can be done in many ways. Many web hosting providers provide website building tools and softwares. This is the easiest method of building a website. Alternatively, you can use programs such as Wordpress and Drupal to create your website.It all depends on your comfort level.</p>
+  </div>
+  <div class="col-md-6">
+
+    <img src="img/code.jpg" id="code">
+  </div>
+  </div><!-- end of row-->
+  <br>
+  <br>
+  <br>
+
+<h1 >Team Members</h1>
+</div><!--end of container-->
+<img src="img/people.png" class="banner">
+
+<div id="portfolio" class="container-fluid text-center">
+
+
+  <div class="row" >
+    <div class="col-md-3">
+    	<h3>Aishwaryalaxmi Itagi</h3>
+        <!--<img src="img/icons/camera.png" id="icon">-->
+    </div>
+    <div class="col-md-3">
+    	<h3>Vishwas Kinare</h3>
+        <!-- <img src="img/icons/mic.png" id="icon">-->
+    </div>
+    <div class="col-md-3">
+    	<h3>Namrata Ghasari</h3>
+        <!-- <img src="img/icons/phone.png" id="icon">-->
+    </div>
+    <div class="col-md-2 " >
+    	<h3>Abhay Naik</h3>
+
+         <!--<img src="img/icons/calendar.png" id="icon">-->
+     <!--end of col-->
+  </div><!--end of row-->
+  </div><!--end of container-->
+<br>
+<br>
+ <br>
+ <br>
+ <br>
+  
+
+<!-- optional can use div-->
+<h1 >Guide</h1>
+
+
+</body>
+
+</html>
+
+
