@@ -3,9 +3,10 @@ import os
 import sys,tweepy,csv,re
 from textblob import TextBlob
 import matplotlib.pyplot as plt
-from nocache import nocache
+
 import urllib.request
 import  urllib.parse
+import shutil
 
 
 app = Flask(__name__)
@@ -17,10 +18,10 @@ def percentage(part, whole):
         return format(temp, '.2f')
 
 def limits(hashtag,tweet_count):
-    consumerKey = 'CHfvQADS2lWqWN3is8PEzHfut'
-    consumerSecret = 'I7x5E2xWp79UoXPJ6kD9PRDrGJRAJ4BaPnD0HRf6nVyz3XDzEN'
-    accessToken = '1002779913588359170-A6G6gLvVB14PPudT9Hx2uiflUBNLjb'
-    accessTokenSecret = 'byZoa2mGNLSIJUkD0qDur4JGdBnjvx9PEHEEJMydLjVpn'
+    consumerKey = 'eFTyjI2bsBS822C7gzZyEhnjQ'
+    consumerSecret = 'mLR0idkPLzfio5ZfUmqhwXXFWezOWCzRnNayLseZ11OnlTniV4'
+    accessToken = '1110564533821558785-6tXEzAw5JbZWRRK98QKOjfavphoiZw'
+    accessTokenSecret = 'rYcCU8md8ngfscaerF2Ri25UXJf2McVd6f7Vn03xhpz1g'
     auth = tweepy.OAuthHandler(consumerKey, consumerSecret)
     auth.set_access_token(accessToken, accessTokenSecret)
     api = tweepy.API(auth)
@@ -47,18 +48,19 @@ def tweetment(hashtag,tweet_count):
 
     polarity = 0
     positive = 0
-    #wpositive = 0
+    wpositive = 0
     spositive = 0
     negative = 0
-    #wnegative = 0
+    wnegative = 0
     snegative = 0
     neutral = 0
 
     count1=0
-    for tweet in tweets:
-        text = tweet.text
+    for extended_tweet in tweets:
+        text = extended_tweet.text
         text = text.replace("RT", " ")
-        text = " ".join(re.sub("(@[A-Za-z0-9]+)|([^0-9A-Za-z \t])|(\w+:\/\/\S+)", " ", text).split())
+       
+      #  text = " ".join(re.sub("(@[A-Za-z0-9]+)|([^0-9A-Za-z \t])|(\w+:\/\/\S+)", " ", text).split())
         print("Tweet: " +text)
         data = urllib.parse.urlencode({"text": text})
         u= urllib.request.urlopen("http://text-processing.com/api/sentiment/", data.encode())
@@ -71,7 +73,7 @@ def tweetment(hashtag,tweet_count):
         #Append to temp so that we can store in csv later. I use encode UTF-8
         #tweetText.append(cleanTweet(tweet.text).encode('utf-8'))
         # print (tweet.text.translate(non_bmp_map))    #print tweet's text
-        analysis = TextBlob(tweet.text)
+        analysis = TextBlob(extended_tweet.text)
         polarity += analysis.sentiment.polarity
         #print(analysis.sentiment.polarity)
         
@@ -79,16 +81,16 @@ def tweetment(hashtag,tweet_count):
         if (analysis.sentiment.polarity == 0):  # adding reaction of how people are reacting to find average later
             neutral += 1
             print(analysis.sentiment.polarity,"neutral")
-        #elif (analysis.sentiment.polarity > 0 and analysis.sentiment.polarity <= 0.3):
-            #wpositive += 1
+        elif (analysis.sentiment.polarity > 0 and analysis.sentiment.polarity <= 0.3):
+            wpositive += 1
         elif (analysis.sentiment.polarity > 0 and analysis.sentiment.polarity <= 0.6):
             positive += 1
             print(analysis.sentiment.polarity,"positive")
         elif (analysis.sentiment.polarity > 0.6 and analysis.sentiment.polarity <= 1):
             spositive += 1
             print(analysis.sentiment.polarity,"spositive")
-        #elif (analysis.sentiment.polarity > -0.3 and analysis.sentiment.polarity <= 0):
-            #wnegative += 1
+        elif (analysis.sentiment.polarity > -0.3 and analysis.sentiment.polarity <= 0):
+            wnegative += 1
         elif (analysis.sentiment.polarity > -0.6 and analysis.sentiment.polarity < 0):
             negative += 1
             print(analysis.sentiment.polarity,"negative")
@@ -99,10 +101,10 @@ def tweetment(hashtag,tweet_count):
             
 
     positive = percentage(positive, NoOfTerms)
-    #wpositive = percentage(wpositive, NoOfTerms)
+    wpositive = percentage(wpositive, NoOfTerms)
     spositive = percentage(spositive, NoOfTerms)
     negative = percentage(negative, NoOfTerms)
-    #wnegative = percentage(wnegative, NoOfTerms)
+    wnegative = percentage(wnegative, NoOfTerms)
     snegative = percentage(snegative, NoOfTerms)
     neutral = percentage(neutral, NoOfTerms)
 
@@ -112,27 +114,26 @@ def tweetment(hashtag,tweet_count):
 
     if (polarity == 0):
         gp="Neutral"
-    #elif (polarity > 0 and polarity <= 0.3):
-        #gp="Weakly Positive"
+    elif (polarity > 0 and polarity <= 0.3):
+        gp="Weakly Positive"
     elif (polarity > 0 and polarity <= 0.6):
         gp="Positive"
     elif (polarity > 0.6 and polarity <= 1):
        gp="Strongly Positive"
-    #elif (polarity > -0.3 and polarity <= 0):
-       #gp="Weakly Negative"
+    elif (polarity > -0.3 and polarity <= 0):
+       gp="Weakly Negative"
     elif (polarity > -0.6 and polarity < 0):
        gp="Negative"
     elif (polarity >= -1 and polarity <= -0.6):
        gp="Strongly Negative"
-        
-        
-    results=[searchTerm,NoOfTerms,gp]
-
 
     labels = ['Positive [' + str(positive) + '%]','Strongly Positive [' + str(spositive) + '%]', 'Strongly Negative [' + str(snegative) + '%]', 'Neutral [' + str(neutral) + '%]','Negative [' + str(negative) + '%]' ]
     sizes = [positive, spositive,snegative, neutral, negative ]
     colors = ['#64dd17','#1b5e20','#d50000', '#ffff00', 'red']
 
+    #dir_name = "__pycache__"
+    #if os.path.isdir(dir_name):
+        #shutil.rmtree('__pycache__')
     
     # only "explode" the 2nd slice (i.e. 'Hogs')
     explode = (0.0, 0.0, 0.0, 0.0,0.0)
@@ -152,25 +153,33 @@ def tweetment(hashtag,tweet_count):
 
     # Equal aspect ratio ensures that pie is drawn as a circle
     plt.axis('equal')  
-    files= os.listdir('static/img')
+    files= os.listdir('static/img/')
     if 'result.png' in files:
         os.remove('static/img/result.png')
     fig2 = plt.gcf()
+    #plt.show()
     fig2.savefig('static/img/result.png',bbox_inches="tight",dpi=400,transparent=True)
+        
+        
+    results=[searchTerm,NoOfTerms,gp]
+
+
+    
     return results
 
-def analyse(tweet):
+def analyse(extended_tweet):
     data = []
-    text = tweet.text
+    text = extended_tweet.text
     text = text.replace("RT", " ")
+    tweet_mode='extended'
     # print(dir(tweet))
-    msg = "Language : " + tweet.lang
+    msg = "Language :" + extended_tweet.lang
     data.append(msg)
-    text = " ".join(re.sub("(@[A-Za-z0-9]+)|([^0-9A-Za-z \t])|(\w+:\/\/\S+)", " ", text).split())
+   # text = " ".join(re.sub("(@[A-Za-z0-9]+)|([^0-9A-Za-z \t])|(\w+:\/\/\S+)", " ", text).split())
     msg = "Tweet : " + text
     data.append(msg)
     analysis = TextBlob(text)
-    # print(analysis.sentiment)
+    #print(analysis.sentiment)
     if analysis.sentiment.polarity == 0:
         msg = "Sentiment : Neutral"
     elif analysis.sentiment.polarity > 0:
@@ -183,21 +192,13 @@ def analyse(tweet):
 #home() serves the home page(i.e index.html
 
 @app.route('/')
-@nocache
+
 def home():
-    files= os.listdir('static/img/')
-    if 'resut.png' in files:
-        os.remove('static/img/resut.png')
     return render_template("index.html")
 
 
-#send_static(filename) serves the files present in the static folder.
-'''@app.route('/<filename :path>')
-def send_static(filename):
-    return static_file(filename, root = 'static/')'''
-
 @app.route("/result",methods = ['POST'])
-@nocache
+
 def analyize():
     if request.method == "POST":
         hashtag = request.form["hashtag"]
@@ -208,4 +209,4 @@ def analyize():
     return render_template("result.html",limits=limits,results=res,analyse=analyse,hashtag=hashtag, tweet_count=tweet_count)
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
