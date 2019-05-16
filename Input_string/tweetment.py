@@ -3,14 +3,16 @@ import os
 import sys,tweepy,csv,re
 from textblob import TextBlob
 import matplotlib.pyplot as plt
+from wordcloud import WordCloud, STOPWORDS
+import pandas as pd 
 
 import urllib.request
 import  urllib.parse
-import shutil
+#import shutil
 
 
 app = Flask(__name__)
-#app.config.from_object(os.environ['APP_SETTINGS'])
+
 
 
 def percentage(part, whole):
@@ -32,7 +34,6 @@ def limits(hashtag,tweet_count):
 
 def tweetment(hashtag,tweet_count):
 
-    #temp=input("Press 0/v/V for voice input for Text input:")
             
     tweets=limits(hashtag,tweet_count)
     searchTerm = str(hashtag)
@@ -56,12 +57,14 @@ def tweetment(hashtag,tweet_count):
     neutral = 0
 
     count1=0
-    for extended_tweet in tweets:
-        text = extended_tweet.text
+    all_words=[]
+    for tweet in tweets:
+        text = tweet.text
         text = text.replace("RT", " ")
-       
-      #  text = " ".join(re.sub("(@[A-Za-z0-9]+)|([^0-9A-Za-z \t])|(\w+:\/\/\S+)", " ", text).split())
+        #text = " ".join(re.sub("(@[A-Za-z0-9]+)|([^0-9A-Za-z \t])|(\w+:\/\/\S+)", " ", text).split())
+
         print("Tweet: " +text)
+        all_words = ' '.join([text])
         data = urllib.parse.urlencode({"text": text})
         u= urllib.request.urlopen("http://text-processing.com/api/sentiment/", data.encode())
         res1 = u.read().decode()
@@ -73,7 +76,7 @@ def tweetment(hashtag,tweet_count):
         #Append to temp so that we can store in csv later. I use encode UTF-8
         #tweetText.append(cleanTweet(tweet.text).encode('utf-8'))
         # print (tweet.text.translate(non_bmp_map))    #print tweet's text
-        analysis = TextBlob(extended_tweet.text)
+        analysis = TextBlob(tweet.text)
         polarity += analysis.sentiment.polarity
         #print(analysis.sentiment.polarity)
         
@@ -127,22 +130,22 @@ def tweetment(hashtag,tweet_count):
     elif (polarity >= -1 and polarity <= -0.6):
        gp="Strongly Negative"
 
-    labels = ['Positive [' + str(positive) + '%]','Strongly Positive [' + str(spositive) + '%]', 'Strongly Negative [' + str(snegative) + '%]', 'Neutral [' + str(neutral) + '%]','Negative [' + str(negative) + '%]' ]
-    sizes = [positive, spositive,snegative, neutral, negative ]
-    colors = ['#64dd17','#1b5e20','#d50000', '#ffff00', 'red']
+    labels = ['Positive [' + str(positive) + '%]','Strongly Positive [' + str(spositive) + '%]', 'Strongly Negative [' + str(snegative) + '%]', 'Neutral [' + str(neutral) + '%]','Negative [' + str(negative) + '%]','Weakly Negative [' + str(wnegative) + '%]','Weakly Positive [' + str(wpositive) + '%]' ]
+    sizes = [positive, spositive,snegative, neutral, negative ,wnegative,wpositive]
+    colors = ['#64dd17','#1b5e20','#d50000', '#ffff00', 'red','orange','#43b84d']
 
     #dir_name = "__pycache__"
     #if os.path.isdir(dir_name):
         #shutil.rmtree('__pycache__')
     
     # only "explode" the 2nd slice (i.e. 'Hogs')
-    explode = (0.0, 0.0, 0.0, 0.0,0.0)
+    explode = (0.0, 0.0, 0.0, 0.0,0.0,0.0,0.0)
 
     #add colors
     #colors = ['#ff9999','#66b3ff','#99ff99','#ffcc99']
 
     #explode = (0.04,0.1,0.04,0.04,0.1)
-    
+    plt.figure()
     plt.pie(sizes, colors = colors, startangle=90, pctdistance=0.85, explode = explode)
     patches, texts = plt.pie(sizes, colors=colors, startangle=90)
     plt.legend(patches, labels,loc="lower right",bbox_to_anchor=(1.05, 0.5),fontsize='small')
@@ -159,6 +162,22 @@ def tweetment(hashtag,tweet_count):
     fig2 = plt.gcf()
     #plt.show()
     fig2.savefig('static/img/result.png',bbox_inches="tight",dpi=400,transparent=True)
+
+    files= os.listdir('static/img/')
+    if 'result12.png' in files:
+        os.remove('static/img/result12.png')
+    
+    stopwords = set(STOPWORDS)
+    wordcloud = WordCloud(width = 800, height = 500, background_color ='white', stopwords = stopwords, min_font_size = 3).generate(all_words)
+  
+    # plot the WordCloud image
+    plt.figure()
+    plt.figure(figsize = (50, 30), facecolor = 'k') 
+    plt.imshow(wordcloud) 
+    plt.axis("off") 
+    #plt.tight_layout(pad = 0) 
+  
+    plt.savefig('static/img/result12.png',bbox_inches="tight",dpi=400,transparent=True)
         
         
     results=[searchTerm,NoOfTerms,gp]
@@ -167,19 +186,20 @@ def tweetment(hashtag,tweet_count):
     
     return results
 
-def analyse(extended_tweet):
+def analyse(tweet):
     data = []
-    text = extended_tweet.text
+    text = tweet.text
+    #print("Tweet: " +text)
     text = text.replace("RT", " ")
-    tweet_mode='extended'
-    # print(dir(tweet))
-    msg = "Language :" + extended_tweet.lang
+    #print(dir(tweet))
+    msg = "Language : " + tweet.lang
     data.append(msg)
-   # text = " ".join(re.sub("(@[A-Za-z0-9]+)|([^0-9A-Za-z \t])|(\w+:\/\/\S+)", " ", text).split())
+   
+    #text = " ".join(re.sub("(@[A-Za-z0-9]+)|([^0-9A-Za-z \t])|(\w+:\/\/\S+)", " ", text).split())
     msg = "Tweet : " + text
     data.append(msg)
     analysis = TextBlob(text)
-    #print(analysis.sentiment)
+    # print(analysis.sentiment)
     if analysis.sentiment.polarity == 0:
         msg = "Sentiment : Neutral"
     elif analysis.sentiment.polarity > 0:
@@ -188,6 +208,7 @@ def analyse(extended_tweet):
         msg = "Sentiment : Negative"
     data.append(msg)
     return data
+
 
 #home() serves the home page(i.e index.html
 
