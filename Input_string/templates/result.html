@@ -1,32 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+      <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+      <meta http-equiv="Pragma" content="no-cache" />
+      <meta http-equiv="Expires" content="0" />
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="shortcut icon" href="static/img/favicon1.png" type="image/x-icon"/>
-    <meta http-equiv="cache-control" content="no-cache, no-store, must-revalidate" />
-    <meta http-equiv="Pragma" content="no-cache" />
-    <meta http-equiv="Expires" content="-1" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   
-    <title>Tweetment</title>
+    <title>Input Strings or Hashtags</title>
 
     <!-- Bootstrap core CSS -->
     <link href="static/css/bootstrap.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="static/css/main.css" rel="stylesheet">
+  <style>
+    body{
+      background-image: url({{ url_for('static', filename='img/twitter-funny.png') }});
+    }
+    body{
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-size:     cover; 
+    }
+    p {
+    line-height: 28px;
+    margin-bottom: 25px;
+    font-size: 16px;
+    }
+    .navbar-default {
+  	 background-color:#53a8c7;
+  	border-color: transparent;
+    }
+    #headerwrap {
+	  margin-top: -20px;
+	  padding-top: 150px;
+    background-attachment: relative;
+    }
+    .tweet{
+      background: transparent;
+    }
+    .cont1{
+      width: 1700px;
+    }
+    .first {
+    width: 500px;
+    float: left;
+    }
+    .second {
+    width: 500px;
+    float: right;
+    margin-right: 40px;
+    margin-top: 20px;
+    }
+  </style>
+ 
 
-    <!-- Fonts from Google Fonts -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-	 
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
-		<![endif]-->
   </head>
 
   <body>		
@@ -34,7 +67,7 @@
     <div class="navbar navbar-default navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
-          <a class="navbar-brand" href="/"><b>TWEETMENT</b></a>
+          <a class="navbar-brand" href="/"><b>Input Strings or Hashtags</b></a>
         </div>
       </div>
     </div>
@@ -55,18 +88,27 @@
             
             <div class="row">		
                 
-                <div class="col-lg-6">
               <div class="cont1">
-                <div id="result-image">
-              <img class="img-responsive"  src="static/img/result.png" alt="" witdh="600px">
+                <div id="result-image" class="first">
+              <img class="img-responsive"  src="{{url_for('static', filename='img/result.png')}}" alt="No image" witdh="600px">
             </div>
+            <div id="result-image" class="second">
+              <img class="img-responsive"  src="{{url_for('static', filename='img/result12.png')}}" alt="No image" witdh="600px" height="600px">
             </div>
+            <div class="col-lg-6">
             </div>
-           
-            </div>
+          </div>
             </div><!-- /container -->
-  </div><!-- /headerwrap -->
-  <div style="color:black">
+  
+  
+  <div style="color:black" class="tweet">
+      <p>
+          <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+            tweets
+          </button>
+        </p>
+        <div class="collapse" id="collapseExample">
+            <div class="card card-body" style="background:transparent;">
     {%if hashtag and tweet_count %} 
     <hr>
       {% for tweet in limits(hashtag, tweet_count) %} 
@@ -78,8 +120,12 @@
       {% endfor %} 
     {% else %}Empty Hashtag and zero limit
     {% endif %} 
-    <hr>
- <!-- Bootstrap core JavaScript
+  </div>
+</div>
+</div>
+  </div>
+    
+   <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
